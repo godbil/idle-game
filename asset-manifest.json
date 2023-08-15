@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/idleGame.com/static/css/main.fead7daf.css",
+    "main.js": "/idleGame.com/static/js/main.338873ab.js",
+    "static/js/787.a78f4d8a.chunk.js": "/idleGame.com/static/js/787.a78f4d8a.chunk.js",
+    "static/media/gman.png": "/idleGame.com/static/media/gman.a393557a461e9d12c1f7.png",
+    "index.html": "/idleGame.com/index.html",
+    "main.fead7daf.css.map": "/idleGame.com/static/css/main.fead7daf.css.map",
+    "main.338873ab.js.map": "/idleGame.com/static/js/main.338873ab.js.map",
+    "787.a78f4d8a.chunk.js.map": "/idleGame.com/static/js/787.a78f4d8a.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.fead7daf.css",
+    "static/js/main.338873ab.js"
+  ]
+}
