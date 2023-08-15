@@ -7,8 +7,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route exact path='/menu' element={<Menu />} />
-        <Route path='/idleGame' element={<Game />} />
+        <Route exact path='/' element={<Menu/>} />
+        <Route path='/idleGame' element={<Game/>} />
       </Routes>
   </Router>
   );
