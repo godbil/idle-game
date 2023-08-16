@@ -4,7 +4,7 @@ import gman from '../assets/gman.png'
 import click from '../assets/gman_happy.png'
 import auto1 from '../assets/gman_fedora.png'
 
-var gold = 0;
+var gold = -5;
 var stage = 0;
 var enemyMaxHealth = 10;
 var clickIncrement = 1;
@@ -39,15 +39,17 @@ function Game() {
         const checkKills = setInterval(() => {
             if (killsNeeded <= 0) {
                 stage += 1;
-                enemyMaxHealth = stage * 10;
-                setHealth(enemyMaxHealth);
 
                 if (stage % 5 === 0) {
+                    enemyMaxHealth = stage * 20;
                     setKills(1);
                 }
                 else {
+                    enemyMaxHealth = stage * 10;
                     setKills(10);
                 }
+
+                setHealth(enemyMaxHealth);
             }
         }, 10)
         
@@ -90,18 +92,22 @@ function Game() {
     };
 
     return (
-        <div className="clicker">
+        <div className='game'>
+            <div className='ui'>
+                <div>Stage: {stage} </div>
+                <div>Kills needed for next stage: {killsNeeded} </div>
+                <div>Health: {enemyHealth} </div>
+                <div>Gold: {gold} </div>
+                <div className='upgrades'>
+                    <button className='clickUpgrade' onClick={() => checkPrice(clickUpgradePrice, increaseClickIncrement)}> 
+                        Increase Click Damage - {clickIncrement} Damage (Costs {clickUpgradePrice} gold) <img className='click' src={click} alt="click" /> </button>
+                    {showButton && <button className='autoFighter1' onClick={ () => {toggleButton(); checkPrice(autoFighterUpgradePrice, startTimer)}}> 
+                        Auto Fighter - {autoIncrement} Damage (Costs {autoFighterUpgradePrice} gold) <img className='auto1' src={auto1} alt="auto1" /> </button>}
+                    {!showButton && <button className='autoFighterUpgrade' onClick={ () => {checkPrice(autoFighterUpgradePrice, increaseIdleIncrement)}}>
+                        Upgrade Auto Fighter - {autoIncrement} Damage (Costs {autoFighterUpgradePrice} gold) <img className='auto1' src={auto1} alt="auto1" /> </button>}
+                </div>
+            </div>
             <button className='gmanButton' onClick={onClick}> <img draggable="false" dragstart="false" className='gman' src={gman} alt="GMAN"/> </button>
-            <div>Stage: {stage} </div>
-            <div>Kills needed for next stage: {killsNeeded} </div>
-            <div>Health: {enemyHealth} </div>
-            <div>Gold: {gold} </div>
-            <button className='clickUpgrade' onClick={() => checkPrice(clickUpgradePrice, increaseClickIncrement)}> 
-                Increase Click Damage - {clickIncrement} Damage (Costs {clickUpgradePrice} gold) <img className='click' src={click} alt="click" /> </button>
-            {showButton && <button className='autoFighter1' onClick={ () => {toggleButton(); checkPrice(autoFighterUpgradePrice, startTimer)}}> 
-                Auto Fighter - {autoIncrement} Damage (Costs {autoFighterUpgradePrice} gold) <img className='auto1' src={auto1} alt="auto1" /> </button>}
-            {!showButton && <button className='autoFighterUpgrade' onClick={ () => {checkPrice(autoFighterUpgradePrice, increaseIdleIncrement)}}>
-                 Upgrade Auto Fighter - {autoIncrement} Damage (Costs {autoFighterUpgradePrice} gold) <img className='auto1' src={auto1} alt="auto1" /> </button>}
             <Link to="/">
                 <button>Main Menu</button>
             </Link>

@@ -1,3 +1,21 @@
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-content: center;
+}
+
+.title {
+  font-size: 82px;
+}
+
+.break {
+  flex-basis: 100%;
+  height: 0;
+}
+
 .gmanButton {
   background: none;
 	color: inherit;
@@ -29,4 +47,8 @@ a {
 .click, .auto1 {
   width: 180px;
   height: 180px;
+}
+
+.game {
+  display: flex;
 }
