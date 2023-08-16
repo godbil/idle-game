@@ -1,16 +1,18 @@
 {
   "files": {
-    "main.css": "/idleGame.com/static/css/main.fead7daf.css",
-    "main.js": "/idleGame.com/static/js/main.a8942697.js",
-    "static/js/787.a78f4d8a.chunk.js": "/idleGame.com/static/js/787.a78f4d8a.chunk.js",
-    "static/media/gman.png": "/idleGame.com/static/media/gman.a393557a461e9d12c1f7.png",
-    "index.html": "/idleGame.com/index.html",
-    "main.fead7daf.css.map": "/idleGame.com/static/css/main.fead7daf.css.map",
-    "main.a8942697.js.map": "/idleGame.com/static/js/main.a8942697.js.map",
-    "787.a78f4d8a.chunk.js.map": "/idleGame.com/static/js/787.a78f4d8a.chunk.js.map"
+    "main.css": "/idle-game/static/css/main.4494abe5.css",
+    "main.js": "/idle-game/static/js/main.0e0ef0e1.js",
+    "static/js/787.a78f4d8a.chunk.js": "/idle-game/static/js/787.a78f4d8a.chunk.js",
+    "static/media/gman_happy.png": "/idle-game/static/media/gman_happy.69a9f360080bfa00b453.png",
+    "static/media/gman.png": "/idle-game/static/media/gman.a393557a461e9d12c1f7.png",
+    "static/media/gman_fedora.png": "/idle-game/static/media/gman_fedora.0bc6370606c95a3f6595.png",
+    "index.html": "/idle-game/index.html",
+    "main.4494abe5.css.map": "/idle-game/static/css/main.4494abe5.css.map",
+    "main.0e0ef0e1.js.map": "/idle-game/static/js/main.0e0ef0e1.js.map",
+    "787.a78f4d8a.chunk.js.map": "/idle-game/static/js/787.a78f4d8a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.fead7daf.css",
-    "static/js/main.a8942697.js"
+    "static/css/main.4494abe5.css",
+    "static/js/main.0e0ef0e1.js"
   ]
 }
