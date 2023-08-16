@@ -20,3 +20,13 @@ a {
   text-decoration: none;
   color: black;
 }
+
+.clickUpgrade, .autoFighter1, .autoFighterUpgrade {
+  width: 200px;
+  height: 200px;
+}
+
+.click, .auto1 {
+  width: 180px;
+  height: 180px;
+}
