@@ -1,3 +1,7 @@
+* {
+  font-family: cursive;
+}
+
 .menu {
   display: flex;
   flex-wrap: wrap;
@@ -16,6 +20,37 @@
   height: 0;
 }
 
+.game {
+  display: flex;
+}
+
+.ui {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 100vh;
+  width: 40vw;
+  font-size: 62px;
+}
+
+.upgrades button {
+
+}
+
+.clickArea {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 100vh;
+  width: 60vw;
+  font-size: 62px;
+}
+
+.menuButton {
+  display: flex;
+  align-items: end;
+}
+
 .gmanButton {
   background: none;
 	color: inherit;
@@ -26,12 +61,14 @@
 	outline: inherit;
 }
 
-.gmam {
+.goblin {
   user-select: none;
   -moz-user-select: none;
   -webkit-user-drag: none;
   -webkit-user-select: none;
   -ms-user-select: none;
+  width: 200px;
+  height: 200px;
 }
 
 a {
@@ -47,8 +84,4 @@ a {
 .click, .auto1 {
   width: 180px;
   height: 180px;
-}
-
-.game {
-  display: flex;
 }
