@@ -1,5 +1,10 @@
 * {
   font-family: cursive;
+  color: white;
+}
+
+button {
+  cursor: pointer;
 }
 
 .menu {
@@ -9,6 +14,16 @@
   height: 100vh;
   justify-content: center;
   align-content: center;
+  background-color: rgb(54, 36, 1);
+}
+
+.menu button {
+  height: 60px;
+  width: 200px;
+  font-size: 24px;
+  border: 5px solid rgb(86, 75, 3);
+  border-radius: 8px;
+  background-color: black;
 }
 
 .title {
@@ -31,10 +46,68 @@
   height: 100vh;
   width: 40vw;
   font-size: 62px;
+  background-color: black;
+}
+
+.gold {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 15vh;
+  border: 10px solid rgb(148, 111, 3);
+  border-radius: 8px;
+  margin: 10px;
+  font-size: 62px;
+}
+
+.damage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;  
+  width: 100%;
+  height: 10vh;
+  border: 10px solid rgb(148, 111, 3);
+  border-radius: 8px;
+  margin: 10px;
+  font-size: 32px;
+}
+
+.upgrades {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;  
+  overflow-y: scroll;
+  width: 100%;
+  height: 60vh;
+  border: 10px solid rgb(148, 111, 3);
+  border-radius: 8px;
+  margin: 10px;
+}
+
+.autoUpgrades {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;  
+  width: 100%;
+  height: 60vh;
 }
 
 .upgrades button {
+  height: 100px;
+  margin: 10px;
+	border: 5px solid rgb(148, 111, 3);
+  border-radius: 8px;
+  background: rgb(16,2,238);
+  background: linear-gradient(to bottom, rgba(16,2,238,1) 0%, rgba(0,212,255,1) 100%);
+}
 
+.upgrades img {
+  width: 180px;
+  height: 180px;
 }
 
 .clickArea {
@@ -44,11 +117,19 @@
   height: 100vh;
   width: 60vw;
   font-size: 62px;
+  background-color: black;
 }
 
 .menuButton {
   display: flex;
   align-items: end;
+  background-color: black;
+}
+
+.menuButton button{
+  border: 5px solid rgb(86, 75, 3);
+  border-radius: 8px;
+  background-color: black;
 }
 
 .gmanButton {
@@ -79,9 +160,4 @@ a {
 .clickUpgrade, .autoFighter1, .autoFighterUpgrade {
   width: 200px;
   height: 200px;
-}
-
-.click, .auto1 {
-  width: 180px;
-  height: 180px;
 }

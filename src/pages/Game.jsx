@@ -3,27 +3,28 @@ import { Link } from "react-router-dom";
 import goblin from '../assets/goblin2.png'
 import mage from '../assets/attackmage1.png'
 import fireMage from '../assets/attackmagefireball.png'
+import electricMage from '../assets/attackmagelightningbolt.png'
+import suppMage from '../assets/supportmage1.png'
+import iceMage from '../assets/supportmagewizardeyes.png'
+import waterMage from '../assets/supportmagequickerhands.png'
 
-var gold = -5;
-var stage = 0;
+var gold = 0;
+var stage = 1;
 var enemyMaxHealth = 10;
 var clickIncrement = 1;
 var autoIncrement = 0;
+var autoTime = 1000;
 var clickUpgradePrice = 20;
 var autoFighterUpgradePrice = 50;
+var showButton = true;
+var firstIdleBought = false;
 
 function Game() { 
     
-    const [enemyHealth, setHealth] = useState(0);
-    const [showButton, setShowButton] = useState(true);
-    const [killsNeeded, setKills] = useState(0);
+    const [enemyHealth, setHealth] = useState(enemyMaxHealth);
+    const [killsNeeded, setKills] = useState(10);
     const [, updateState] = useState();
     const forceUpdate = useCallback(() => updateState({}), []);
-
-
-    const toggleButton = () => {
-        setShowButton(!showButton);
-    };
 
     useEffect(() => {
         const checkHealth = setInterval(() => {
@@ -67,21 +68,22 @@ function Game() {
         setHealth(enemyHealth - clickIncrement)
     };
 
-    const checkPrice = (price, func1 = () => {}, func2 = () => {}) => {
+    const checkPrice = (price, func1 = () => {}, func2 = () => {}, buttonID = '') => {
         if (gold >= price) {
             gold -= price;
             func1();
             func2();
         }
-        else {
-            setShowButton(showButton);
+        if (buttonID === 'autoFighter1') {
+            showButton = false;
+            firstIdleBought = true
         }
     };
 
     const startTimer = () => {
         setInterval(() => {
             setHealth(seconds => seconds - autoIncrement)
-        }, 1000)
+        }, autoTime)
     };
 
     const increaseClickIncrement = () => {
@@ -97,22 +99,48 @@ function Game() {
     return (
         <div className='game'>
             <div className='ui'>
-                <div>🪙 {gold} </div>
-                <div className='break'></div>
+                <div className='gold'>🪙 {gold} </div>
                 <div className='damage'>
                     <div>{autoIncrement} DPS (idle) </div>
+                    <div className='break'></div>
                     <div>{clickIncrement} Click Damage </div>
                 </div>
                 <div className='upgrades'>
                     <button className='clickUpgrade' onClick={() => {checkPrice(clickUpgradePrice, increaseClickIncrement); forceUpdate()}}> 
                         Upgrade Click Damage <br /> 🪙 {clickUpgradePrice} </button>
-                    <img className='click' src={mage} alt="Mage" /> 
+                    <img className='click' src={suppMage} alt="Support Mage" /> 
                     <div className='break'></div>
-                    {showButton && <button className='autoFighter1' onClick={() => {toggleButton(); checkPrice(autoFighterUpgradePrice, startTimer, increaseIdleIncrement)}}> 
-                        Buy Auto Fighter <br /> 🪙 {autoFighterUpgradePrice} </button>}
+                    {showButton && <button className='autoFighter1' onClick={() => {checkPrice(autoFighterUpgradePrice, startTimer, increaseIdleIncrement, 'autoFighter1')}}> 
+                        Buy Attack Mage <br /> 🪙 {autoFighterUpgradePrice} </button>}
                     {!showButton && <button className='autoFighterUpgrade' onClick={() => {checkPrice(autoFighterUpgradePrice, increaseIdleIncrement)}}>
-                        Upgrade Auto Fighter <br /> 🪙 {autoFighterUpgradePrice} </button>}
-                    <img className='auto1' src={fireMage} alt="Fire Mage" /> 
+                        Upgrade Attack Mage <br /> 🪙 {autoFighterUpgradePrice} </button>}
+                    <img className='auto1' src={mage} alt="Attack Mage" /> 
+                    {firstIdleBought && <div className='autoUpgrades'>
+                        <div className='break'></div>
+                        {!showButton && <button className='autoFighter1' onClick={() => {checkPrice(autoFighterUpgradePrice, increaseIdleIncrement)}}> 
+                            Buy Ice Mage <br /> 🪙 {autoFighterUpgradePrice} </button>}
+                        {showButton && <button className='autoFighterUpgrade' onClick={() => {checkPrice(autoFighterUpgradePrice, increaseIdleIncrement)}}>
+                            Upgrade Ice Mage <br /> 🪙 {autoFighterUpgradePrice} </button>}
+                        <img className='auto4' src={iceMage} alt="Ice Mage" /> 
+                        <div className='break'></div>
+                        {!showButton && <button className='autoFighter1' onClick={() => {checkPrice(autoFighterUpgradePrice, increaseIdleIncrement)}}> 
+                            Buy Water Mage <br /> 🪙 {autoFighterUpgradePrice} </button>}
+                        {showButton && <button className='autoFighterUpgrade' onClick={() => {checkPrice(autoFighterUpgradePrice, increaseIdleIncrement)}}>
+                            Upgrade Water Mage <br /> 🪙 {autoFighterUpgradePrice} </button>}
+                        <img className='auto5' src={waterMage} alt="Water Mage" /> 
+                        <div className='break'></div>
+                        {!showButton && <button className='autoFighter1' onClick={() => {checkPrice(autoFighterUpgradePrice, increaseIdleIncrement)}}> 
+                            Buy Fire Mage <br /> 🪙 {autoFighterUpgradePrice} </button>}
+                        {showButton && <button className='autoFighterUpgrade' onClick={() => {checkPrice(autoFighterUpgradePrice, increaseIdleIncrement)}}>
+                            Upgrade Fire Mage <br /> 🪙 {autoFighterUpgradePrice} </button>}
+                        <img className='auto2' src={fireMage} alt="Fire Mage" /> 
+                        <div className='break'></div>
+                        {!showButton && <button className='autoFighter1' onClick={() => {checkPrice(autoFighterUpgradePrice, increaseIdleIncrement)}}> 
+                            Buy Electric Mage <br /> 🪙 {autoFighterUpgradePrice} </button>}
+                        {showButton && <button className='autoFighterUpgrade' onClick={() => {checkPrice(autoFighterUpgradePrice, increaseIdleIncrement)}}>
+                            Upgrade Electric Mage <br /> 🪙 {autoFighterUpgradePrice} </button>}
+                        <img className='auto3' src={electricMage} alt="Electric Mage" />
+                    </div>}
                 </div>
             </div>
             <div className='clickArea'>
