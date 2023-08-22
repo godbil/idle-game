@@ -1,18 +1,30 @@
-import {React, useState, useEffect, useCallback}  from 'react';
+import {React, useState, useEffect}  from 'react';
 import { Link } from "react-router-dom";
-import goblin from '../assets/goblin2.png'
 import mage from '../assets/attackmage1.png'
 import fireMage from '../assets/attackmagefireball.png'
 import electricMage from '../assets/attackmagelightningbolt.png'
 import suppMage from '../assets/supportmage1.png'
 import iceMage from '../assets/supportmagewizardeyes.png'
 import waterMage from '../assets/supportmagequickerhands.png'
+import slime from '../assets/slime.png'
+import smallGoblin from '../assets/goblin1.png'
+import goblin from '../assets/goblin2.png'
+import skeleton from '../assets/skeleton.png'
+import smallSkeleton from '../assets/smallskeleton.png'
+import skeletonHead from '../assets/skeletonhead.png'
+import mageSkeleton from '../assets/mageskeleton.png'
+import sneakySkeleton from '../assets/sneakyskeleton.png'
+import armouredSkeleton from '../assets/armouredskeleton.png'
+import thief from '../assets/thief.png'
+import ogre from '../assets/shrek.png'
+import dragon from '../assets/dragon.png'
 
-
+const mobs = [slime, smallGoblin, goblin, skeleton, smallSkeleton, skeletonHead, mageSkeleton, sneakySkeleton, armouredSkeleton, thief]
+const bossMobs = [ogre, dragon]
 
 function Game() { 
     
-    const [gold, setGold] = useState(JSON.parse(localStorage.getItem("gold")) || 1000);
+    const [gold, setGold] = useState(JSON.parse(localStorage.getItem("gold")) || 100000);
     const [stage, setStage] = useState(JSON.parse(localStorage.getItem("stage")) || 1);
     const [enemyMaxHealth, setMaxHealth] = useState(JSON.parse(localStorage.getItem("maxHealth")) || 10);
     const [clickIncrement, setClickIncrement] = useState(JSON.parse(localStorage.getItem("clickIncrement")) || 1);
@@ -32,8 +44,7 @@ function Game() {
     const [fireMageButton, setFireMageButton] = useState(JSON.parse(localStorage.getItem("fireMageButton")) || true);
     const [electricMageButton, setElectricMageButton] = useState(JSON.parse(localStorage.getItem("electricMageButton")) || true);
     const [firstIdleBought, setFirstIdleBought] = useState(JSON.parse(localStorage.getItem("firstIdleBought")) || false);
-    const [, updateState] = useState();
-    const forceUpdate = useCallback(() => updateState({}), []);
+    const [randomMob, setRandomMob] =  useState(JSON.parse(localStorage.getItem("randomMob")) || mobs[0]);
 
     useEffect(() => {
         window.localStorage.setItem('gold', JSON.stringify(gold))
@@ -56,35 +67,52 @@ function Game() {
         window.localStorage.setItem('fireMageButton', JSON.stringify(fireMageButton))
         window.localStorage.setItem('electricMageButton', JSON.stringify(electricMageButton))
         window.localStorage.setItem('firstIdleBought', JSON.stringify(firstIdleBought))
+        window.localStorage.setItem('randomMob', JSON.stringify(randomMob))
     }, [attackMageButton, attackMageUpgradePrice, autoIncrement, autoInterval, clickIncrement, clickUpgradePrice, electricMageButton, 
         electricMageUpgradePrice, enemyHealth, enemyMaxHealth, fireMageButton, fireMageUpgradePrice, firstIdleBought, gold, iceMageButton, 
-        iceMageUpgradePrice, killsNeeded, stage, waterMageButton, waterMageUpgradePrice]);
-
-
+        iceMageUpgradePrice, killsNeeded, stage, waterMageButton, waterMageUpgradePrice, randomMob]);
 
     useEffect(() => {
         const checkStates = setInterval(() => {
             if (enemyHealth <= 0) {
+                setRandomMob(mobs[Math.floor(Math.random() * 10)]);
                 setHealth(enemyMaxHealth);
-                setKills(killsNeeded - 1)
+                setKills(killsNeeded => killsNeeded - 1)
                 dropGold();
             }
             if (killsNeeded <= 0) {
                 setStage(stage => stage + 1);
-
-                if (stage % 5 === 0) {
-                    setMaxHealth(stage * 20);
-                    setKills(1);
-                }
-                else {
-                    setMaxHealth(stage * 10);
-                    setKills(10);
-                }
-                setHealth(enemyMaxHealth);
             }
         }, 10)
         
         return () => clearInterval(checkStates);
+    });
+
+    useEffect(() => {
+        if (killsNeeded <= 0) {
+            if (stage % 5 === 0) {
+                setRandomMob(bossMobs[Math.floor(Math.random() * 2)]);
+                setMaxHealth(stage * 20);
+                setKills(1);
+            }
+            else {
+                setMaxHealth(stage * 10);
+                setKills(10);
+            }
+        }
+            
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [enemyMaxHealth, stage]);
+
+
+    useEffect(() => {
+        const startIdle = setInterval(() => {
+            if (firstIdleBought) {
+                setHealth(enemyHealth => enemyHealth - autoIncrement)
+            }
+        }, autoInterval)
+
+        return () => clearInterval(startIdle)
     });
 
     const dropGold = () => {
@@ -98,39 +126,18 @@ function Game() {
     const checkPrice = (price, increment, interval, setUpgradePrice, buttonSwitchFunc = () => {}, buttonID = '') => {
         if (gold >= price) {
             if (buttonID === 'clickUpgrade') {
-                increaseClickIncrement(price, increment);
-            }
-            else if (buttonID === 'autoFighter1') {
-                setFirstIdleBought(true);
-                startTimer();
-                increaseIdleIncrement(increment, interval);
-                buttonSwitchFunc(false); 
-                setUpgradePrice(price * 2);
+                setClickIncrement(clickIncrement => clickIncrement + increment);
+                setClickUpgradePrice(price * 2);
             }
             else {
-                increaseIdleIncrement(increment, interval);
+                setFirstIdleBought(true);
                 buttonSwitchFunc(false); 
                 setUpgradePrice(price * 2);
+                setAutoIncrement(autoIncrement => autoIncrement + increment);
+                setAutoInterval(autoInterval => autoInterval - interval);
             }
-            setGold(gold => gold -= price)
-            forceUpdate();
+            setGold(gold => gold - price);
         }
-    };
-
-    const startTimer = () => {
-        setInterval(() => {
-            setHealth(seconds => seconds - autoIncrement)
-        }, autoInterval)
-    };
-
-    const increaseClickIncrement = (price, increment) => {
-        setClickIncrement(clickIncrement => clickIncrement + increment);
-        setClickUpgradePrice(price * 2);
-    };
-
-    const increaseIdleIncrement = (increment, interval) => {
-        setAutoIncrement(autoIncrement => autoIncrement + increment);
-        setAutoInterval(autoInterval => autoInterval - interval)
     };
 
     return (
@@ -185,7 +192,7 @@ function Game() {
                 <div className='break'></div>
                 <div>💀 {killsNeeded} </div>
                 <div className='break'></div>
-                <button className='gmanButton' onClick={onClick}> <img draggable="false" dragstart="false" className='goblin' src={goblin} alt="Goblin"/> </button>
+                <button className='gmanButton' onClick={onClick}> <img draggable="false" dragstart="false" className='clickerButton' src={randomMob} alt="Clicker Button"/> </button>
                 <div className='break'></div>
                 <div>{enemyHealth} / {enemyMaxHealth} HP</div>
             </div>
