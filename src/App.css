@@ -49,12 +49,12 @@ button {
   background-color: black;
 }
 
-.gold {
+.currency {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 15vh;
+  height: 18vh;
   border: 10px solid rgb(148, 111, 3);
   border-radius: 8px;
   margin: 10px;
@@ -95,13 +95,28 @@ button {
   width: 100%;
 }
 
+.rebirthUpgrades {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;  
+  width: 100%;
+}
+
 .upgrades button {
   height: 100px;
+  width: 200px;
   margin: 10px;
 	border: 5px solid rgb(148, 111, 3);
   border-radius: 8px;
   background: rgb(16,2,238);
   background: linear-gradient(to bottom, rgba(16,2,238,1) 0%, rgba(0,212,255,1) 100%);
+}
+
+.upgrades .maxedButton {
+  height: 100px;
+  width: 200px;
+  background: rgb(52, 51, 61);
 }
 
 .upgrades img {
@@ -123,13 +138,17 @@ button {
   background-color: black;
 }
 
-.menuButton {
+.sideMenu {
   display: flex;
-  align-items: end;
+  flex-wrap: wrap;
+  justify-content: end;
+  align-content: space-between;
   background-color: black;
 }
 
-.menuButton button{
+.sideMenu button{
+  height: 50px;
+  width: 100px;
   border: 5px solid rgb(86, 75, 3);
   border-radius: 8px;
   background-color: black;
