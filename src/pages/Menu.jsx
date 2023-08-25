@@ -7,7 +7,7 @@ function Menu() {
 
     return (
         <div className='menu'>
-            <div className='title'><img src={titleImage} alt="Title" /></div>
+            <div className='title'><img draggable="false" dragstart="false" src={titleImage} alt="Title" /></div>
             <div className='break'></div>
             <Link to="/idleGame">
                 <button>Play</button>

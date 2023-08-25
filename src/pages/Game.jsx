@@ -24,6 +24,14 @@ import warrior from '../assets/warrior1.png'
 import warrior2 from '../assets/warriorevenfasterslashing.png'
 import warrior3 from '../assets/warriorcircleslash.png'
 import warrior4 from '../assets/warriorbladelord.png'
+import ballista from '../assets/ballistapowerfularrows.png'
+import ballista2 from '../assets/ballistafasterfiring.png'
+import ballista3 from '../assets/ballistalasercannon.png'
+import ballista4 from '../assets/ballistarayofdoom.png'
+import mortar from '../assets/mortar1.png'
+import mortar2 from '../assets/mortarstrongerbombs.png'
+import mortar3 from '../assets/mortarthebigone.png'
+import mortar4 from '../assets/mortarthebiggestone.png'
 import slime from '../assets/slime.png'
 import smallGoblin from '../assets/goblin1.png'
 import goblin from '../assets/goblin2.png'
@@ -45,6 +53,8 @@ const goldImg = [iceMage, iceMage2, iceMage3, iceMage4]
 const speedImg = [electricMage, electricMage2, electricMage3, electricMage4]
 const rebirthDamageImg = [warrior, warrior2, warrior3, warrior4]
 const rebirthGoldImg = [farm, farm2, farm3, farm4]
+const rebirthKills = [ballista, ballista2, ballista3, ballista4]
+const rebirthStage = [mortar, mortar2, mortar3, mortar4]
 const mobs = [slime, smallGoblin, goblin, skeleton, smallSkeleton, skeletonHead, mageSkeleton, sneakySkeleton, armouredSkeleton, thief, head]
 const bossMobs = [ogre, dragon, headless]
 
@@ -53,6 +63,7 @@ function Game() {
     const [gold, setGold] = useState(JSON.parse(localStorage.getItem("gold")) || 0);
     const [souls, setSouls] = useState(JSON.parse(localStorage.getItem("souls")) || 0);
     const [stage, setStage] = useState(JSON.parse(localStorage.getItem("stage")) || 1);
+    const [stageBoost, setStageBoost] = useState(JSON.parse(localStorage.getItem("stageBoost")) || 0);
     const [enemyMaxHealth, setMaxHealth] = useState(JSON.parse(localStorage.getItem("maxHealth")) || 10);
     const [clickIncrement, setClickIncrement] = useState(JSON.parse(localStorage.getItem("clickIncrement")) || 1);
     const [autoIncrement, setAutoIncrement] = useState(JSON.parse(localStorage.getItem("autoIncrement")) || 0);
@@ -66,8 +77,11 @@ function Game() {
     const [electricMageUpgradePrice, setElectricMageUpgradePrice] = useState(JSON.parse(localStorage.getItem("electricMagePrice")) || 1000);
     const [warriorUpgradePrice, setWarriorUpgradePrice] = useState(JSON.parse(localStorage.getItem("warriorUpgradePrice")) || 5);
     const [farmUpgradePrice, setFarmUpgradePrice] = useState(JSON.parse(localStorage.getItem("farmUpgradePrice")) || 5);
+    const [ballistaUpgradePrice, setBallistaUpgradePrice] = useState(JSON.parse(localStorage.getItem("ballistaUpgradePrice")) || 20);
+    const [mortarUpgradePrice, setMortarUpgradePrice] = useState(JSON.parse(localStorage.getItem("mortarUpgradePrice")) || 100);
     const [enemyHealth, setHealth] = useState(JSON.parse(localStorage.getItem("health")) || enemyMaxHealth);
     const [killsNeeded, setKills] = useState(JSON.parse(localStorage.getItem("kills")) || 10);
+    const [killsBoost, setKillsBoost] = useState(JSON.parse(localStorage.getItem("killsBoost")) || 0);
     const [firstIdleBought, setFirstIdleBought] = useState(JSON.parse(localStorage.getItem("firstIdleBought")) || false);
     const [firstRebirth, setFirstRebirth] = useState(JSON.parse(localStorage.getItem("firstRebirth")) || false);
     const [waterMageLevel, setWaterMageLevel] = useState(JSON.parse(localStorage.getItem("waterMageLevel")) || 1);
@@ -76,13 +90,17 @@ function Game() {
     const [electricMageLevel, setElectricMageLevel] = useState(JSON.parse(localStorage.getItem("electricMageLevel")) || 1);
     const [warriorLevel, setWarriorLevel] = useState(JSON.parse(localStorage.getItem("warriorLevel")) || 1);
     const [farmLevel, setFarmLevel] = useState(JSON.parse(localStorage.getItem("farmLevel")) || 1);
+    const [ballistaLevel, setBallistaLevel] = useState(JSON.parse(localStorage.getItem("ballistaLevel")) || 1);
+    const [mortarLevel, setMortarLevel] = useState(JSON.parse(localStorage.getItem("mortarLevel")) || 1);
     const [randomMob, setRandomMob] =  useState(JSON.parse(localStorage.getItem("randomMob")) || mobs[0]);
     const [electricMageMax, setElectricMageMax] = useState(JSON.parse(localStorage.getItem("electricMageMax")) || false);
+    const [ballistaMax, setBallistaMax] = useState(JSON.parse(localStorage.getItem("ballistaMax")) || false);
 
     useEffect(() => {
         window.localStorage.setItem('gold', JSON.stringify(gold))
         window.localStorage.setItem('souls', JSON.stringify(souls))
         window.localStorage.setItem('stage', JSON.stringify(stage))
+        window.localStorage.setItem('stageBoost', JSON.stringify(stageBoost))
         window.localStorage.setItem('maxHealth', JSON.stringify(enemyMaxHealth))
         window.localStorage.setItem('clickIncrement', JSON.stringify(clickIncrement))
         window.localStorage.setItem('autoIncrement', JSON.stringify(autoIncrement))
@@ -96,8 +114,11 @@ function Game() {
         window.localStorage.setItem('electricMagePrice', JSON.stringify(electricMageUpgradePrice))
         window.localStorage.setItem('warriorUpgradePrice', JSON.stringify(warriorUpgradePrice))
         window.localStorage.setItem('farmUpgradePrice', JSON.stringify(farmUpgradePrice))
+        window.localStorage.setItem('ballistaUpgradePrice', JSON.stringify(ballistaUpgradePrice))
+        window.localStorage.setItem('mortarUpgradePrice', JSON.stringify(mortarUpgradePrice))
         window.localStorage.setItem('health', JSON.stringify(enemyHealth))
         window.localStorage.setItem('kills', JSON.stringify(killsNeeded))
+        window.localStorage.setItem('killsBoost', JSON.stringify(killsBoost))
         window.localStorage.setItem('firstIdleBought', JSON.stringify(firstIdleBought))
         window.localStorage.setItem('firstRebirth', JSON.stringify(firstRebirth))
         window.localStorage.setItem('waterMageLevel', JSON.stringify(waterMageLevel))
@@ -106,9 +127,12 @@ function Game() {
         window.localStorage.setItem('electricMageLevel', JSON.stringify(electricMageLevel))
         window.localStorage.setItem('warriorLevel', JSON.stringify(warriorLevel))
         window.localStorage.setItem('farmLevel', JSON.stringify(farmLevel))
+        window.localStorage.setItem('ballistaLevel', JSON.stringify(ballistaLevel))
+        window.localStorage.setItem('mortarLevel', JSON.stringify(mortarLevel))
         window.localStorage.setItem('randomMob', JSON.stringify(randomMob))
         window.localStorage.setItem('electricMageMax', JSON.stringify(electricMageMax))
-    }, [fireMageUpgradePrice, autoIncrement, autoInterval, clickIncrement, iceMageUpgradePrice, electricMageUpgradePrice, enemyHealth, enemyMaxHealth, souls, firstRebirth, firstIdleBought, gold, killsNeeded, stage, waterMageUpgradePrice, randomMob, goldBoost, iceMageLevel, waterMageLevel, fireMageLevel, electricMageLevel, electricMageMax, warriorUpgradePrice, farmUpgradePrice, warriorLevel, farmLevel, rebirthIncrement, rebirthGoldBoost]);
+        window.localStorage.setItem('ballistaMax', JSON.stringify(ballistaMax))
+    }, [fireMageUpgradePrice, autoIncrement, autoInterval, clickIncrement, iceMageUpgradePrice, electricMageUpgradePrice, enemyHealth, enemyMaxHealth, souls, firstRebirth, firstIdleBought, gold, killsNeeded, stage, waterMageUpgradePrice, randomMob, goldBoost, iceMageLevel, waterMageLevel, fireMageLevel, electricMageLevel, electricMageMax, warriorUpgradePrice, farmUpgradePrice, warriorLevel, farmLevel, rebirthIncrement, rebirthGoldBoost, ballistaLevel, mortarLevel, ballistaUpgradePrice, mortarUpgradePrice, stageBoost, killsBoost, ballistaMax]);
 
     useEffect(() => {
         const checkStates = setInterval(() => {
@@ -119,7 +143,12 @@ function Game() {
                 dropGold();
             }
             if (killsNeeded <= 0) {
-                setStage(stage => stage + 1);
+                if (stage === 1 && stageBoost !== 0) {
+                    setStage(stageBoost);
+                }
+                else {
+                    setStage(stage => stage + 1);
+                }
             }
         }, 10)
         
@@ -135,7 +164,7 @@ function Game() {
             }
             else {
                 setMaxHealth(stage * 10);
-                setKills(10);
+                setKills(10 - killsBoost);
             }
         }
             
@@ -169,6 +198,9 @@ function Game() {
                 setClickIncrement(clickIncrement => clickIncrement + increment);
                 setWaterMageUpgradePrice(Math.round(price * 1.22));
             }
+            else if (autoInterval - interval <= 100) {
+                setElectricMageMax(true);
+            }
             else {
                 setFirstIdleBought(true);
                 setUpgradePrice(Math.round(price * 1.22));
@@ -179,18 +211,20 @@ function Game() {
             setGold(gold => gold - price);
             levelFunc(level => level + 1)
         }
-        if (electricMageLevel === 11) {
-            setElectricMageMax(true);
-        }
     };
 
-    const checkSouls = (price, increment, goldAddition, setUpgradePrice, levelFunc = () => {}) => {
+    const checkSouls = (price, increment, goldAddition, killsSubtraction, stageAddition, setUpgradePrice, levelFunc = () => {}) => {
+        if (killsBoost + killsSubtraction >= 5) {
+            setBallistaMax(true);
+        }
         if (souls >= price) {
             setUpgradePrice(Math.round(price * 2));
             setAutoIncrement(autoIncrement => autoIncrement + increment);
             setRebirthIncrement(rebirthIncrement => rebirthIncrement + increment)
             setGoldBoost(goldBoost => goldBoost + goldAddition)
             setRebirthGoldBoost(rebirthGoldBoost => rebirthGoldBoost + goldAddition)
+            setKillsBoost(killsBoost => killsBoost + killsSubtraction)
+            setStageBoost(stageBoost => stageBoost + stageAddition)
             setSouls(souls => souls - price);
             levelFunc(level => level + 1)
         }
@@ -222,14 +256,14 @@ function Game() {
             setElectricMageMax(false);
         }
         else {
-            alert("Reach stage 50 to rebirth! For every rebirth, you will get 10 🥛 which can be used to upgrade rebirth upgrades. For every stage past 50 that you are on, you will get another 🥛. As well, for every 1000 gold, get another 🥛.")
+            alert("Reach stage 50 to rebirth! For every rebirth, you will get 10 🧿 which can be used to upgrade rebirth upgrades. For every stage past 50 that you are on, you will get another 🧿. As well, for every 1000 gold, get another 🧿.")
         }
     };
 
     return (
         <div className='game'>
             <div className='ui'>
-                <div className='currency'>🪙 {gold} <br /> 🥛 {souls} </div>
+                <div className='currency'>🪙 {gold} <br /> 🧿 {souls} </div>
                 <div className='damage'>
                     <div>{autoIncrement / autoInterval * 1000} DPS (idle) </div>
                     <div className='break'></div>
@@ -241,7 +275,7 @@ function Game() {
                         {checkPrice(waterMageUpgradePrice, 1 + Math.floor(waterMageLevel / 5), 0, 0, undefined, setWaterMageLevel, 'clickUpgrade')}}> 
                         Click Damage <br /> 🪙 {waterMageUpgradePrice} </button>
                     <div className='upgDesc'>Water Mage <br /> Level {waterMageLevel}</div>
-                    <img className='click' src={clickImg[Math.min(Math.floor(waterMageLevel / 5), 3)]} alt="Water Mage" /> 
+                    <img draggable="false" dragstart="false"  className='click' src={clickImg[Math.min(Math.floor(waterMageLevel / 5), 3)]} alt="Water Mage" /> 
 
                     <div className='break'></div>
 
@@ -249,7 +283,7 @@ function Game() {
                         {checkPrice(fireMageUpgradePrice, 1 + Math.floor(fireMageLevel / 5), 0, 0, setFireMageUpgradePrice, setFireMageLevel)}}>
                         Idle Damage <br /> 🪙 {fireMageUpgradePrice} </button>
                     <div className='upgDesc'>Fire Mage <br /> Level {fireMageLevel}</div>
-                    <img className='auto1' src={damageImg[Math.min(Math.floor(fireMageLevel / 5), 3)]} alt="Fire Mage" /> 
+                    <img draggable="false" dragstart="false"  className='auto1' src={damageImg[Math.min(Math.floor(fireMageLevel / 5), 3)]} alt="Fire Mage" /> 
 
                     {firstIdleBought && <div className='autoUpgrades'>
                         <div className='break'></div>
@@ -258,7 +292,7 @@ function Game() {
                             {checkPrice(iceMageUpgradePrice, 0, 0, 1 + Math.floor(iceMageLevel / 2), setIceMageUpgradePrice, setIceMageLevel)}}>
                             More Gold <br /> 🪙 {iceMageUpgradePrice} </button>
                         <div className='upgDesc'>Ice Mage <br /> Level {iceMageLevel}</div>
-                        <img className='auto2' src={goldImg[Math.min(Math.floor(iceMageLevel / 5), 3)]} alt="Ice Mage" /> 
+                        <img draggable="false" dragstart="false"  className='auto2' src={goldImg[Math.min(Math.floor(iceMageLevel / 5), 3)]} alt="Ice Mage" /> 
 
                         <div className='break'></div>
 
@@ -268,25 +302,43 @@ function Game() {
                         {electricMageMax && <button className='maxedButton' disabled={true}> 
                             Max Level </button>}
                         <div className='upgDesc'>Electric Mage <br /> Level {electricMageLevel}</div>
-                        <img className='auto3' src={speedImg[Math.min(Math.floor(electricMageLevel / 4), 3)]} alt="Electric Mage" />
+                        <img draggable="false" dragstart="false"  className='auto3' src={speedImg[Math.min(Math.floor(electricMageLevel / 4), 3)]} alt="Electric Mage" />
                     </div>}
 
                     {firstRebirth && <div className='rebirthUpgrades'>
                         <div className='break'></div>
 
                         <button className='autoFighterUpgrade' onClick={() => 
-                            checkSouls(warriorUpgradePrice, 3 + (3 * Math.floor(fireMageLevel / 5)), 0, setWarriorUpgradePrice, setWarriorLevel)}>
-                            Extreme Damage <br /> 🥛 {warriorUpgradePrice} </button>
+                            checkSouls(warriorUpgradePrice, 3 + (3 * Math.floor(warriorLevel / 5)), 0, 0, 0, setWarriorUpgradePrice, setWarriorLevel)}>
+                            Extreme Damage <br /> 🧿 {warriorUpgradePrice} </button>
                         <div className='upgDesc'>Warrior <br /> Level {warriorLevel}</div>
-                        <img className='auto2' src={rebirthDamageImg[Math.min(Math.floor(iceMageLevel / 5), 3)]} alt="Ice Mage" /> 
+                        <img draggable="false" dragstart="false"  className='auto2' src={rebirthDamageImg[Math.min(Math.floor(warriorLevel / 5), 3)]} alt="Warrior" /> 
 
                         <div className='break'></div>
 
                         <button className='autoFighterUpgrade' onClick={() => 
-                            checkSouls(farmUpgradePrice, 0, 2 + (2 * Math.floor(fireMageLevel / 2)), setFarmUpgradePrice, setFarmLevel)}>
-                            Extreme Gold  <br /> 🥛 {farmUpgradePrice} </button>
+                            checkSouls(farmUpgradePrice, 0, 2 + (2 * Math.floor(farmLevel / 2)), 0, 0, setFarmUpgradePrice, setFarmLevel)}>
+                            Extreme Gold  <br /> 🧿 {farmUpgradePrice} </button>
                         <div className='upgDesc'>Farm <br /> Level {farmLevel}</div>
-                        <img className='auto3' src={rebirthGoldImg[Math.min(Math.floor(electricMageLevel / 4), 3)]} alt="Electric Mage" />
+                        <img draggable="false" dragstart="false"  className='auto3' src={rebirthGoldImg[Math.min(Math.floor(farmLevel / 4), 3)]} alt="Farm" />
+
+                        <div className='break'></div>
+
+                        {!ballistaMax && <button className='autoFighterUpgrade' onClick={() => 
+                            checkSouls(ballistaUpgradePrice, 0, 0, 1, 0, setBallistaUpgradePrice, setBallistaLevel)}>
+                            Decrease Kills Needed  <br /> 🧿 {ballistaUpgradePrice} </button>}
+                        {ballistaMax && <button className='maxedButton' disabled={true}> 
+                        Max Level </button>}
+                        <div className='upgDesc'>Ballista <br /> Level {ballistaLevel}</div>
+                        <img draggable="false" dragstart="false"  className='auto3' src={rebirthKills[Math.min(Math.floor(ballistaLevel / 2), 3)]} alt="Ballista" />
+                        
+                        <div className='break'></div>
+
+                        <button className='autoFighterUpgrade' onClick={() => 
+                            checkSouls(mortarUpgradePrice, 0, 0, 0, 10, setMortarUpgradePrice, setMortarLevel)}>
+                            Skip Stages  <br /> 🧿 {mortarUpgradePrice} </button>
+                        <div className='upgDesc'>Mortar <br /> Level {mortarLevel}</div>
+                        <img draggable="false" dragstart="false"  className='auto3' src={rebirthStage[Math.min(Math.floor(mortarLevel / 4), 3)]} alt="Mortar" />
                     </div>}
                 </div>
             </div>
