@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/idle-game/static/css/main.5b4ba209.css",
-    "main.js": "/idle-game/static/js/main.e7fde1ca.js",
+    "main.css": "/idle-game/static/css/main.64795439.css",
+    "main.js": "/idle-game/static/js/main.4e2d8b3d.js",
     "static/js/787.a78f4d8a.chunk.js": "/idle-game/static/js/787.a78f4d8a.chunk.js",
     "static/media/headlessman.png": "/idle-game/static/media/headlessman.90beb3a79f261446c902.png",
     "index.html": "/idle-game/index.html",
-    "main.5b4ba209.css.map": "/idle-game/static/css/main.5b4ba209.css.map",
-    "main.e7fde1ca.js.map": "/idle-game/static/js/main.e7fde1ca.js.map",
+    "main.64795439.css.map": "/idle-game/static/css/main.64795439.css.map",
+    "main.4e2d8b3d.js.map": "/idle-game/static/js/main.4e2d8b3d.js.map",
     "787.a78f4d8a.chunk.js.map": "/idle-game/static/js/787.a78f4d8a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.5b4ba209.css",
-    "static/js/main.e7fde1ca.js"
+    "static/css/main.64795439.css",
+    "static/js/main.4e2d8b3d.js"
   ]
 }
