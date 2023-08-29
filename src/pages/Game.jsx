@@ -71,10 +71,10 @@ function Game() {
     const [goldBoost, setGoldBoost] = useState(JSON.parse(localStorage.getItem("goldBoost")) || 0);
     const [rebirthIncrement, setRebirthIncrement] = useState(JSON.parse(localStorage.getItem("rebirthIncrement")) || 0);
     const [rebirthGoldBoost, setRebirthGoldBoost] = useState(JSON.parse(localStorage.getItem("rebirthGoldBoost")) || 0);
-    const [waterMageUpgradePrice, setWaterMageUpgradePrice] = useState(JSON.parse(localStorage.getItem("waterMagePrice")) || 5);
+    const [waterMageUpgradePrice, setWaterMageUpgradePrice] = useState(JSON.parse(localStorage.getItem("waterMageUpgradePrice")) || 5);
     const [fireMageUpgradePrice, setFireMageUpgradePrice] = useState(JSON.parse(localStorage.getItem("fireMageUpgradePrice")) || 50);
     const [iceMageUpgradePrice, setIceMageUpgradePrice] = useState(JSON.parse(localStorage.getItem("iceMageUpgradePrice")) || 100);
-    const [electricMageUpgradePrice, setElectricMageUpgradePrice] = useState(JSON.parse(localStorage.getItem("electricMagePrice")) || 300);
+    const [electricMageUpgradePrice, setElectricMageUpgradePrice] = useState(JSON.parse(localStorage.getItem("electricMageUpgradePrice")) || 300);
     const [warriorUpgradePrice, setWarriorUpgradePrice] = useState(JSON.parse(localStorage.getItem("warriorUpgradePrice")) || 5);
     const [farmUpgradePrice, setFarmUpgradePrice] = useState(JSON.parse(localStorage.getItem("farmUpgradePrice")) || 5);
     const [ballistaUpgradePrice, setBallistaUpgradePrice] = useState(JSON.parse(localStorage.getItem("ballistaUpgradePrice")) || 20);
@@ -108,10 +108,10 @@ function Game() {
         window.localStorage.setItem('goldBoost', JSON.stringify(goldBoost))
         window.localStorage.setItem('rebirthIncrement', JSON.stringify(rebirthIncrement))
         window.localStorage.setItem('rebirthGoldBoost', JSON.stringify(rebirthGoldBoost))
-        window.localStorage.setItem('waterMagePrice', JSON.stringify(waterMageUpgradePrice))
-        window.localStorage.setItem('fireMagePrice', JSON.stringify(fireMageUpgradePrice))
-        window.localStorage.setItem('iceMagePrice', JSON.stringify(iceMageUpgradePrice))
-        window.localStorage.setItem('electricMagePrice', JSON.stringify(electricMageUpgradePrice))
+        window.localStorage.setItem('waterMageUpgradePrice', JSON.stringify(waterMageUpgradePrice))
+        window.localStorage.setItem('fireMageUpgradePrice', JSON.stringify(fireMageUpgradePrice))
+        window.localStorage.setItem('iceMageUpgradePrice', JSON.stringify(iceMageUpgradePrice))
+        window.localStorage.setItem('electricMageUpgradePrice', JSON.stringify(electricMageUpgradePrice))
         window.localStorage.setItem('warriorUpgradePrice', JSON.stringify(warriorUpgradePrice))
         window.localStorage.setItem('farmUpgradePrice', JSON.stringify(farmUpgradePrice))
         window.localStorage.setItem('ballistaUpgradePrice', JSON.stringify(ballistaUpgradePrice))
@@ -194,12 +194,12 @@ function Game() {
 
     const checkPrice = (price, increment, interval, goldAddition, setUpgradePrice, levelFunc = () => {}, buttonID = '') => {
         if (gold >= price) {
+            if (autoInterval - interval <= 200) {
+                setElectricMageMax(true);
+            }
             if (buttonID === 'clickUpgrade') {
                 setClickIncrement(clickIncrement => clickIncrement + increment);
                 setWaterMageUpgradePrice(Math.round(price * 1.22));
-            }
-            else if (autoInterval - interval <= 100) {
-                setElectricMageMax(true);
             }
             else {
                 setFirstIdleBought(true);
@@ -231,7 +231,7 @@ function Game() {
     };
 
     const rebirth = () => {
-        if (stage >= 50) {
+        if (stage >= 100) {
             setSouls(souls => souls + 10 + (2 * (stage - 50)) + (2 * Math.floor(gold / 1000)));
             setFirstRebirth(true);
             setGold(0);
@@ -256,7 +256,7 @@ function Game() {
             setElectricMageMax(false);
         }
         else {
-            alert("Reach stage 50 to rebirth! For every rebirth, you will get 10 🧿 which can be used to upgrade rebirth upgrades. For every stage past 50 that you are on, you will get another 2 🧿. As well, for every 1000 gold, get another 2 🧿.")
+            alert("Reach stage 100 to rebirth! For every rebirth, you will get 10 🧿 which can be used to upgrade rebirth upgrades. For every stage past 50 that you are on, you will get another 2 🧿. As well, for every 1000 gold, get another 2 🧿.")
         }
     };
 
@@ -265,7 +265,7 @@ function Game() {
             <div className='ui'>
                 <div className='currency'>🪙 {gold} <br /> 🧿 {souls} </div>
                 <div className='damage'>
-                    <div>{autoIncrement / autoInterval * 1000} DPS (idle) </div>
+                    <div>{Math.round(autoIncrement / autoInterval * 1000)} DPS (idle) </div>
                     <div className='break'></div>
                     <div>{clickIncrement} Click Damage </div>
                 </div>
